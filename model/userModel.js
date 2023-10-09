@@ -1,0 +1,113 @@
+const mongoose = require('mongoose');
+const validator = require('validator');
+const isSegurePassword = require('./../utils/validatePassoword');
+const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
+
+const userSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: [true, 'Um usuário precisa de um email!'],
+    unique: true,
+    validate: {
+      validator: validator.isEmail,
+      message: 'O email não é válido',
+    },
+  },
+  password: {
+    type: String,
+    required: [true, 'Um usuário precisa de uma senha!'],
+    minlength: [8, 'A senha precisa de, no mínimo, 8 caracteres.'],
+    validate: {
+      validator: isSegurePassword,
+      message: 'A senha não atende aos requisitos de segurança.',
+    },
+    select: false,
+  },
+  passwordConfirm: {
+    type: String,
+    required: [true, 'Um usuário precisa de uma confirmação de senha'],
+    validate: {
+      validator: function (val) {
+        return this.password === val;
+      },
+      message: 'As senhas não coincidem!',
+    },
+    select: false,
+  },
+  name: {
+    type: String,
+    required: [true, 'Um usuário precisa de um nome!'],
+  },
+  age: {
+    type: Number,
+    required: [true, 'Um usuário precisa de uma idade'],
+  },
+  initialComment: {
+    type: String,
+    required: [true, 'Um usuário precisa de um comentário inicial'],
+    maxlength: [300, 'Um comentário deve conter até 300 caracteres.'],
+  },
+  role: {
+    type: String,
+    default: 'user',
+    select: false,
+    enum: ['admin', 'user'],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  passwordChangedAt: {
+    type: Date,
+    select: false,
+  },
+
+  passwordResetToken: String,
+  passwordResetExpires: Date,
+});
+
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+
+  this.password = await bcrypt.hash(this.password, 12);
+
+  this.passwordConfirm = undefined;
+});
+
+userSchema.post('save', function () {
+  this.role = undefined;
+  this.__v = undefined;
+  this.password = undefined;
+});
+
+userSchema.methods.correctPassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
+userSchema.methods.changedPasswordAfter = function (jwtTimeStamp) {
+  if (this.passwordChangedAt) {
+    const changedTimeStamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+    return jwtTimeStamp < changedTimeStamp;
+  }
+
+  return false;
+};
+
+userSchema.methods.createResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
+};
+
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;
