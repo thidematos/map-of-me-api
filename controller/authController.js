@@ -30,7 +30,14 @@ exports.signUp = catchAsync(async (req, res, next) => {
     initialComment: req.body.initialComment,
   });
 
-  createSignToken(newUser, 201, res);
+  res.status(201).json({
+    status: 'sucess',
+    data: {
+      user: newUser,
+    },
+  });
+
+  //createSignToken(newUser, 201, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
