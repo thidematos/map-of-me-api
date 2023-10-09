@@ -11,7 +11,7 @@ const userRouter = require('./routes/userRoute');
 //Global Middlewares
 app.use(morgan('dev'));
 app.use(express.json({ limit: '10kb' }));
-app.use(cors({ origin: 'https://thidematos.github.io/game-map-of-me' }));
+app.use(cors());
 app.options('*', cors());
 
 //Resources Routes
