@@ -14,8 +14,8 @@ app.use(morgan('dev'));
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 
-app.use(cors());
-app.options('/api/v1/users', cors());
+app.use(cors({ credentials: true }));
+app.options('*', cors());
 
 app.use((req, res, next) => {
   console.log(req.cookies);
