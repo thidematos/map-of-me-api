@@ -123,3 +123,10 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const resetToken = await user.createResetToken();
   await user.save({ validateBeforeSave: false });
 });
+
+exports.verifyAuth = catchAsync(async (req, res, next) => {
+  res.status(200).json({
+    status: 'sucess',
+    verified: true,
+  });
+});
