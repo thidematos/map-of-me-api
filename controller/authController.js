@@ -18,8 +18,6 @@ const createSignToken = (user, statusCode, res) => {
     httpOnly: true,
   });
 
-  console.log(res);
-
   res.status(statusCode).json({
     status: 'sucess',
     token,
