@@ -14,13 +14,7 @@ app.use(morgan('dev'));
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 
-app.use(
-  cors({
-    credentials: true,
-    origin: 'https://thidematos.github.io',
-    secure: true,
-  })
-);
+app.use(cors());
 app.options(cors());
 
 app.use((req, res, next) => {
