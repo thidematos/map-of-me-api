@@ -48,6 +48,90 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Um usuário precisa de um comentário inicial'],
     maxlength: [300, 'Um comentário deve conter até 300 caracteres.'],
   },
+
+  levels: {
+    mapOne: {
+      completed: {
+        type: Boolean,
+        default: false,
+      },
+      focusTime: String,
+      wrongMoves: String,
+      durationToComplete: String,
+      hints: String,
+    },
+    mapTwo: {
+      completed: {
+        type: Boolean,
+        default: false,
+      },
+      focusTime: String,
+      wrongMoves: String,
+      durationToComplete: String,
+      hints: String,
+    },
+    mapThree: {
+      completed: {
+        type: Boolean,
+        default: false,
+      },
+      focusTime: String,
+      wrongMoves: String,
+      durationToComplete: String,
+      hints: String,
+    },
+    mapFour: {
+      completed: {
+        type: Boolean,
+        default: false,
+      },
+      focusTime: String,
+      wrongMoves: String,
+      durationToComplete: String,
+      hints: String,
+    },
+    mapFive: {
+      completed: {
+        type: Boolean,
+        default: false,
+      },
+      focusTime: String,
+      wrongMoves: String,
+      durationToComplete: String,
+      hints: String,
+    },
+    mapSix: {
+      completed: {
+        type: Boolean,
+        default: false,
+      },
+      focusTime: String,
+      wrongMoves: String,
+      durationToComplete: String,
+      hints: String,
+    },
+    mapSeven: {
+      completed: {
+        type: Boolean,
+        default: false,
+      },
+      focusTime: String,
+      wrongMoves: String,
+      durationToComplete: String,
+      hints: String,
+    },
+    mapEight: {
+      completed: {
+        type: Boolean,
+        default: false,
+      },
+      focusTime: String,
+      wrongMoves: String,
+      durationToComplete: String,
+      hints: String,
+    },
+  },
+
   role: {
     type: String,
     default: 'user',
