@@ -17,10 +17,11 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: 'https://thidematos.github.io/TheMapOfMe/',
+    origin: 'https://thidematos.github.io',
     secure: true,
   })
 );
+app.options(cors());
 
 app.use((req, res, next) => {
   console.log(req.cookies);
