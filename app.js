@@ -14,7 +14,13 @@ app.use(morgan('dev'));
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 
-app.use(cors({ credentials: true, origin: true }));
+app.use(
+  cors({
+    credentials: true,
+    origin: 'https://thidematos.github.io/TheMapOfMe/',
+    secure: true,
+  })
+);
 
 app.use((req, res, next) => {
   console.log(req.cookies);
