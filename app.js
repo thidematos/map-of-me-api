@@ -18,14 +18,14 @@ app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: 'https://thidematos.github.io',
+    origin: 'https://themapofme.onrender.com',
     credentials: true,
   })
 );
 app.options(
   '*',
   cors({
-    origin: 'https://thidematos.github.io',
+    origin: 'https://themapofme.onrender.com',
     credentials: true,
   })
 );
