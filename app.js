@@ -18,14 +18,14 @@ app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: 'https://themapofme.onrender.com',
+    origin: 'http://127.0.0.1:5500',
     credentials: true,
   })
 );
 app.options(
   '*',
   cors({
-    origin: 'https://themapofme.onrender.com',
+    origin: 'http://127.0.0.1:5500',
     credentials: true,
   })
 );
@@ -33,7 +33,6 @@ app.options(
 app.use(helmet());
 
 app.use((req, res, next) => {
-  console.log(req.cookies);
   next();
 });
 

@@ -19,6 +19,9 @@ router
     userControllers.getAllUsers
   );
 
-router.route('/:id').get(userControllers.getUser);
+router
+  .route('/:id')
+  .get(userControllers.getUser)
+  .patch(authControllers.protect, userControllers.updateUser);
 
 module.exports = router;

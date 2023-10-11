@@ -131,6 +131,65 @@ const userSchema = new mongoose.Schema({
       hints: String,
     },
   },
+  feedbacks: {
+    hasFeedbacks: {
+      type: Boolean,
+      default: false,
+    },
+    feedbacks: [
+      {
+        title: String,
+        feedback: String,
+        rating: {
+          type: Number,
+          max: 5,
+          min: 1,
+        },
+      },
+    ],
+  },
+  toWin: {
+    mapOne: {
+      type: Boolean,
+      default: false,
+    },
+    mapTwo: {
+      type: Boolean,
+      default: false,
+    },
+    mapThree: {
+      type: Boolean,
+      default: false,
+    },
+    mapFour: {
+      type: Boolean,
+      default: false,
+    },
+    mapFive: {
+      type: Boolean,
+      default: false,
+    },
+    mapSix: {
+      type: Boolean,
+      default: false,
+    },
+    mapSeven: {
+      type: Boolean,
+      default: false,
+    },
+    mapEight: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  alreadyEnded: {
+    type: Boolean,
+    default: false,
+  },
+  alreadyBegin: {
+    type: Boolean,
+    default: false,
+  },
 
   role: {
     type: String,

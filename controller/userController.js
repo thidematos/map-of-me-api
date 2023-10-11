@@ -41,3 +41,35 @@ exports.getUser = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.updateUser = catchAsync(async (req, res, next) => {
+  //Req.body = { puzzleID, data: { completeTime, wrongMoves, focusTime, hints } }
+
+  const currentUser = req.user;
+  console.log(currentUser);
+
+  if (req.body.alreadyBegin) currentUser.alreadyBegin = true;
+  else {
+    const puzzleID = req.body.puzzleID;
+    const { completeTime, wrongMoves, focusTime, hints } = req.body.data;
+
+    currentUser.levels[puzzleID].completed = true;
+    currentUser.levels[puzzleID].durationToComplete = completeTime;
+    currentUser.levels[puzzleID].wrongMoves = wrongMoves;
+    currentUser.levels[puzzleID].focusTime = focusTime;
+    currentUser.levels[puzzleID].hints = hints;
+
+    currentUser.toWin[puzzleID] = true;
+  }
+
+  const updatedUser = await currentUser.save({ validateModifiedOnly: true });
+
+  req.user = updatedUser;
+
+  res.status(200).json({
+    status: 'sucess',
+    data: {
+      user: updatedUser,
+    },
+  });
+});
