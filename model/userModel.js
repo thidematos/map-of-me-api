@@ -139,7 +139,8 @@ const userSchema = new mongoose.Schema({
     feedbacks: [
       {
         title: String,
-        feedback: String,
+        level: String,
+        description: String,
         rating: {
           type: Number,
           max: 5,

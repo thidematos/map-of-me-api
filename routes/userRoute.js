@@ -8,6 +8,13 @@ router.post('/signup', authControllers.signUp);
 router.post('/login', authControllers.login);
 router.post('/verifyAuth', authControllers.protect, authControllers.verifyAuth);
 
+router.get(
+  '/adminView',
+  authControllers.protect,
+  authControllers.restrict('admin'),
+  userControllers.sendHTML
+);
+
 router.post('/forgotPassword', authControllers.forgotPassword);
 
 router

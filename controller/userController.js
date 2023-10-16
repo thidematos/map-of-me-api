@@ -1,5 +1,6 @@
 const User = require('./../model/userModel');
 const catchAsync = require('./../utils/catchAsync');
+const templates = require('./../public/templates');
 
 exports.createUser = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
@@ -46,10 +47,18 @@ exports.updateUser = catchAsync(async (req, res, next) => {
   //Req.body = { puzzleID, data: { completeTime, wrongMoves, focusTime, hints } }
 
   const currentUser = req.user;
-  console.log(currentUser);
 
   if (req.body.alreadyBegin) currentUser.alreadyBegin = true;
-  else {
+  else if (req.body.alreadyEnded) currentUser.alreadyEnded = true;
+  else if (req.body.hasFeedback) {
+    currentUser.feedbacks.hasFeedbacks = true;
+    currentUser.feedbacks.feedbacks.push({
+      title: req.body.title,
+      level: req.body.level,
+      description: req.body.description,
+      rating: req.body.rating,
+    });
+  } else {
     const puzzleID = req.body.puzzleID;
     const { completeTime, wrongMoves, focusTime, hints } = req.body.data;
 
@@ -70,6 +79,15 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     status: 'sucess',
     data: {
       user: updatedUser,
+    },
+  });
+});
+
+exports.sendHTML = catchAsync(async (req, res, next) => {
+  res.status(200).json({
+    status: 'sucess',
+    data: {
+      html: templates.adminView,
     },
   });
 });
