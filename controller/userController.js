@@ -21,7 +21,15 @@ exports.createUser = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
+  const { page, sort, limit, fields, ...queryObj } = req.query;
+
+  let query = User.find();
+
+  if (fields) {
+    query = query.sort('-createdAt').select('createdAt age initialComment');
+  }
+
+  const users = await query;
 
   res.status(200).json({
     status: 'sucess',
@@ -87,7 +95,7 @@ exports.sendHTML = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'sucess',
     data: {
-      html: templates.adminView,
+      html: templates[req.params.dashboard],
     },
   });
 });

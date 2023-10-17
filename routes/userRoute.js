@@ -9,7 +9,7 @@ router.post('/login', authControllers.login);
 router.post('/verifyAuth', authControllers.protect, authControllers.verifyAuth);
 
 router.get(
-  '/adminView',
+  '/adminView/:dashboard?',
   authControllers.protect,
   authControllers.restrict('admin'),
   userControllers.sendHTML
