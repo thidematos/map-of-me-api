@@ -99,3 +99,19 @@ exports.sendHTML = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.getUsersFeedbacks = catchAsync(async (req, res, next) => {
+  let query = User.find({ 'feedbacks.hasFeedbacks': true })
+    .select('_id feedbacks name age')
+    .sort('-feedbacks.lastFeedback');
+
+  const data = await query;
+
+  res.status(200).json({
+    status: 'sucess',
+    results: data.length,
+    data: {
+      data,
+    },
+  });
+});

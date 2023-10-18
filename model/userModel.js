@@ -136,6 +136,8 @@ const userSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     },
+    lastFeedback: Date,
+    averageRating: Number,
     feedbacks: [
       {
         title: String,
@@ -145,6 +147,10 @@ const userSchema = new mongoose.Schema({
           type: Number,
           max: 5,
           min: 1,
+        },
+        timeStamp: {
+          type: Date,
+          default: new Date(),
         },
       },
     ],
@@ -200,7 +206,7 @@ const userSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: new Date(),
   },
   passwordChangedAt: {
     type: Date,
@@ -217,6 +223,18 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 12);
 
   this.passwordConfirm = undefined;
+});
+
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('feedbacks.feedbacks')) return next();
+
+  this.feedbacks.lastFeedback = this.feedbacks.feedbacks.at(-1).timeStamp;
+
+  const averageRating =
+    this.feedbacks.feedbacks.reduce((sum, el) => sum + el.rating, 0) /
+    this.feedbacks.feedbacks.length;
+
+  this.feedbacks.averageRating = averageRating;
 });
 
 userSchema.post('save', function () {
