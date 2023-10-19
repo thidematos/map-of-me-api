@@ -7,6 +7,21 @@ const router = express.Router();
 router.post('/signup', authControllers.signUp);
 router.post('/login', authControllers.login);
 router.post('/verifyAuth', authControllers.protect, authControllers.verifyAuth);
+
+router.get(
+  '/statistics/levels/:level',
+  authControllers.protect,
+  authControllers.restrict('admin'),
+  userControllers.getLevelStatistics
+);
+
+router.get(
+  '/statistics/metrics/:metric',
+  authControllers.protect,
+  authControllers.restrict('admin'),
+  userControllers.getMetricStatistics
+);
+
 router.get(
   '/usersFeedbacks',
   authControllers.protect,
@@ -20,8 +35,6 @@ router.get(
   authControllers.restrict('admin'),
   userControllers.sendHTML
 );
-
-router.post('/forgotPassword', authControllers.forgotPassword);
 
 router
   .route('/')

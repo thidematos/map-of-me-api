@@ -122,3 +122,189 @@ exports.Feedbacks = `<div class="feedbacks__modal" style="display: none">
   
 </section>
 </main>`;
+
+exports.Statistics = `<main
+class="flex flex-col justify-center gap-20 items-center pt-8 w-full h-full py-16"
+>
+<button class="back__button">Voltar!</button>
+<header class="flex flex-row justify-center items-center gap-16">
+  <img src="./assets/logo300.png" alt="" />
+  <div
+    class="flex flex-col justify-center items-center tracking-wider text-gray-700 gap-4"
+  >
+    <h1 class="font-amatic text-6xl text-azulEscuro">
+      Desempenho de nossos exploradores
+    </h1>
+    <div
+      class="flex flex-col justify-center items-center font-jakarta text-lg"
+    >
+      <p class="">
+        Veja a estatística do desempenho de nossos aventureiros.
+      </p>
+    </div>
+  </div>
+</header>
+<section class="statistics__button-container w-full h-full flex flex-col justify-center items-center gap-8">
+  <div
+    class="statistic__button-firstContainer flex flex-row justify-center items-center text-gray-50 font-amatic text-4xl underline decoration-2 gap-12 w-full"
+  >
+    <button
+      class="statistic__button-first bg-orange-400 p-4 rounded-lg shadow-lg drop-shadow w-[15%]"
+      data-firstOption="levels"
+    >
+      <p>Fases</p>
+    </button>
+    <button
+      class="statistic__button-first bg-orange-400 p-4 rounded-lg shadow-lg drop-shadow w-[15%]"
+      data-firstOption="metrics"
+    >
+      <p>Métricas</p>
+    </button>
+    <button
+      class="statistic__button-first bg-orange-400 p-4 rounded-lg shadow-lg drop-shadow w-[15%]"
+      data-firstOption="ages"
+    >
+      <p>Faixas Etárias</p>
+    </button>
+  </div>
+  <div
+    class="statistics__button-ages flex flex-row justify-center items-center gap-8 hidden"
+  >
+    <button class="statistic__button" data-ages="3-5">3-5 anos</button>
+    <button class="statistic__button" data-ages="5-7">5-7 anos</button>
+    <button class="statistic__button" data-ages="7-9">7-9 anos</button>
+    <button class="statistic__button" data-ages="9-11">9-11 anos</button>
+    <button class="statistic__button" data-ages="another">
+      Demais idades
+    </button>
+  </div>
+  <div
+    class="statistics__button-metrics flex flex-row justify-center items-center gap-8 w-full hidden"
+  >
+    <button class="statistic__button" data-metrics="focus">
+      <i class="fa-solid fa-arrows-to-circle text-3xl"></i>
+      <p class="text-2xl">Foco</p>
+    </button>
+    <button class="statistic__button" data-metrics="completionTime">
+      <i class="fa-solid fa-stopwatch text-3xl"></i>
+      <p class="text-xl">Tempo de montagem</p>
+    </button>
+    <button class="statistic__button" data-metrics="hints">
+      <i class="fa-solid fa-signs-post text-3xl"></i>
+      <p class="text-xl">Dicas utilizadas</p>
+    </button>
+    <button class="statistic__button" data-metrics="errors">
+      <i class="fa-solid fa-road-circle-xmark text-3xl"></i>
+      <p class="text-2xl">Erros</p>
+    </button>
+  </div>
+  <div
+    class="statistics__button-levels flex flex-row justify-center items-center gap-8 w-full hidden"
+  >
+    <button class="statistic__button" data-levels="mapOne">
+      <img
+        src="./assets/btnOne.png"
+        alt=""
+        class="w-[70%]"
+        
+      />
+      <h4 class="">Felicidade!</h4>
+    </button>
+    <button class="statistic__button" data-levels="mapTwo">
+      <img
+        src="./assets/btnTwo.png"
+        alt=""
+        class="w-[70%]"
+        
+      />
+      <h4 class="">Admiração!</h4>
+    </button> 
+    <button class="statistic__button" data-levels="mapThree">
+      <img
+        src="./assets/btnThree.png"
+        alt=""
+        class="w-[70%]"
+        
+      />
+      <h4 class="">Medo!</h4>
+    </button>
+    <button class="statistic__button" data-levels="mapFour">
+      <img
+        src="./assets/btnFour.png"
+        alt=""
+        class="w-[70%]"
+        
+      />
+      <h4 class="">Coragem!</h4>
+    </button>
+    <button class="statistic__button" data-levels="mapFive">
+      <img
+        src="./assets/btnFive.png"
+        alt=""
+        class="w-[70%]"
+        
+      />
+      <h4 class="">Diversão!</h4>
+    </button>
+    <button class="statistic__button" data-levels="mapSix">
+      <img
+        src="./assets/btnSix.png"
+        alt=""
+        class="w-[70%]"
+        
+      />
+      <h4 class="">Empatia!</h4>
+    </button>
+    <button class="statistic__button" data-levels="mapSeven">
+      <img
+        src="./assets/btnSeven.png"
+        alt=""
+        class="w-[70%]"
+        
+      />
+      <h4 class="">Esperança!</h4>
+    </button>
+    <button class="statistic__button" data-levels="mapEight">
+      <img
+        src="./assets/btnEight.png"
+        alt=""
+        class="w-[70%]"
+        
+      />
+      <h4 class="">The Map of Me!</h4>
+    </button>
+  </div>
+</section>
+<section
+  class="statistics__info flex flex-col justify-center items-center w-full w-full gap-12"
+>
+  <h3
+    class="statistics__info-message font-amatic text-4xl text-orange-300 font-bold drop-shadow-sm"
+  >
+    Selecione uma das opções para começar!
+  </h3>
+  <img
+    src="./assets/father.png"
+    alt=""
+    class="w-[8%] drop-shadow-xl"
+  />
+</section>
+<section class="statistics__chart-container w-[80%] h-[60vh] flex flex-row justify-center items-center hidden ">
+    <canvas id="" class="w-full h-[40vh] border-2 border-solid border-orange-300 rounded-lg shadow-xl bg-gray-50"> </canvas>
+</section>
+<section class="statistics__error w-full flex flex-col justify-center items-center gap-12 hidden">
+<div class="flex flex-col justify-center items-center gap-8">
+<div
+  class="flex flex-col justify-center items-center font-jakarta text-gray-700 gap-4"
+>
+  <h3 class="font-amatic tracking-wide text-4xl underline decoration-2">
+    Infelizmente, ainda não há dados para essas fases!
+  </h3>
+  <p class="text-lg">
+    Vamos esperar nossos aventureiros explorarem um pouco mais!
+  </p>
+</div>
+<img src="./assets/panda.png" alt="" class="w-[35%]" />
+</div>
+</section>
+</main>`;

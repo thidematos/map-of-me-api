@@ -1,6 +1,7 @@
 const User = require('./../model/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const templates = require('./../public/templates');
+const AppError = require('../utils/appError');
 
 exports.createUser = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
@@ -112,6 +113,76 @@ exports.getUsersFeedbacks = catchAsync(async (req, res, next) => {
     results: data.length,
     data: {
       data,
+    },
+  });
+});
+
+exports.getLevelStatistics = catchAsync(async (req, res, next) => {
+  const level = req.params.level;
+
+  if (!level) return next(new AppError('Não foi encontrado essa fase!', 404));
+
+  const statistics = await User.aggregate([
+    {
+      $match: { role: { $ne: 'admin' }, [`levels.${level}.completed`]: true },
+    },
+    {
+      $group: {
+        _id: null,
+
+        avgDurationToComplete: { $avg: `$levels.${level}.durationToComplete` },
+        maxDurationToComplete: { $max: `$levels.${level}.durationToComplete` },
+        minDurationToComplete: { $min: `$levels.${level}.durationToComplete` },
+
+        avgFocusTime: { $avg: `$levels.${level}.focusTime` },
+        maxFocusTime: { $max: `$levels.${level}.focusTime` },
+        minFocusTime: { $min: `$levels.${level}.focusTime` },
+
+        avgHints: { $avg: `$levels.${level}.hints` },
+        maxHints: { $max: `$levels.${level}.hints` },
+        minHints: { $min: `$levels.${level}.hints` },
+
+        avgWrongMoves: { $avg: `$levels.${level}.wrongMoves` },
+        maxWrongMoves: { $max: `$levels.${level}.wrongMoves` },
+        minWrongMoves: { $min: `$levels.${level}.wrongMoves` },
+
+        numOfUsersData: { $sum: 1 },
+      },
+    },
+  ]);
+
+  res.status(200).json({
+    status: 'sucess',
+    data: {
+      statistics,
+    },
+  });
+});
+
+exports.getMetricStatistics = catchAsync(async (req, res, next) => {
+  const metric = req.params.metric;
+
+  if (!metric)
+    return next(new AppError('Essa métrica não foi encontrada!', 404));
+
+  const metrics = await User.aggregate([
+    {
+      $match: {
+        role: { $ne: 'admin' },
+      },
+    },
+    {
+      $match: {
+        [levels.mapOne.completed]: true,
+      },
+    },
+    //Eu quero que só os users que completaram o mapa possam partilhar dessa aggregation. Como farei?
+  ]);
+
+  res.status(200).json({
+    status: 'sucess',
+    data: {
+      metrics,
     },
   });
 });
