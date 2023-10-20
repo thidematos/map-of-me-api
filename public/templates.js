@@ -171,21 +171,18 @@ class="flex flex-col justify-center gap-20 items-center pt-8 w-full h-full py-16
     class="statistics__button-ages flex flex-row justify-center items-center gap-8 hidden"
   >
     <button class="statistic__button" data-ages="3-5">3-5 anos</button>
-    <button class="statistic__button" data-ages="5-7">5-7 anos</button>
-    <button class="statistic__button" data-ages="7-9">7-9 anos</button>
+    <button class="statistic__button" data-ages="6-8">6-8 anos</button>
     <button class="statistic__button" data-ages="9-11">9-11 anos</button>
-    <button class="statistic__button" data-ages="another">
-      Demais idades
-    </button>
+    <button class="statistic__button" data-ages="12-99">Demais idades</button>
   </div>
   <div
     class="statistics__button-metrics flex flex-row justify-center items-center gap-8 w-full hidden"
   >
-    <button class="statistic__button" data-metrics="focus">
+    <button class="statistic__button" data-metrics="focusTime">
       <i class="fa-solid fa-arrows-to-circle text-3xl"></i>
       <p class="text-2xl">Foco</p>
     </button>
-    <button class="statistic__button" data-metrics="completionTime">
+    <button class="statistic__button" data-metrics="durationToComplete">
       <i class="fa-solid fa-stopwatch text-3xl"></i>
       <p class="text-xl">Tempo de montagem</p>
     </button>
@@ -193,7 +190,7 @@ class="flex flex-col justify-center gap-20 items-center pt-8 w-full h-full py-16
       <i class="fa-solid fa-signs-post text-3xl"></i>
       <p class="text-xl">Dicas utilizadas</p>
     </button>
-    <button class="statistic__button" data-metrics="errors">
+    <button class="statistic__button" data-metrics="wrongMoves">
       <i class="fa-solid fa-road-circle-xmark text-3xl"></i>
       <p class="text-2xl">Erros</p>
     </button>
@@ -289,9 +286,11 @@ class="flex flex-col justify-center gap-20 items-center pt-8 w-full h-full py-16
     class="w-[8%] drop-shadow-xl"
   />
 </section>
-<section class="statistics__chart-container w-[80%] h-[60vh] flex flex-row justify-center items-center hidden ">
-    <canvas id="" class="w-full h-[40vh] border-2 border-solid border-orange-300 rounded-lg shadow-xl bg-gray-50"> </canvas>
+<section class="statistics__chart-container w-[80%] h-[60vh] flex flex-row flex-wrap justify-center items-center gap-8 hidden "></section>
+
+<section class="statistics__chart-container-metrics w-[90%] h-[60vh] flex flex-row justify-center items-center gap-12 hidden ">
 </section>
+
 <section class="statistics__error w-full flex flex-col justify-center items-center gap-12 hidden">
 <div class="flex flex-col justify-center items-center gap-8">
 <div

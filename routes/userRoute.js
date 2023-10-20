@@ -9,6 +9,13 @@ router.post('/login', authControllers.login);
 router.post('/verifyAuth', authControllers.protect, authControllers.verifyAuth);
 
 router.get(
+  '/statistics/ages/:age',
+  authControllers.protect,
+  authControllers.restrict('admin'),
+  userControllers.getAgeStatistics
+);
+
+router.get(
   '/statistics/levels/:level',
   authControllers.protect,
   authControllers.restrict('admin'),

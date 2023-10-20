@@ -165,24 +165,244 @@ exports.getMetricStatistics = catchAsync(async (req, res, next) => {
   if (!metric)
     return next(new AppError('Essa métrica não foi encontrada!', 404));
 
-  const metrics = await User.aggregate([
+  const metrics = {};
+
+  metrics.mapOne = User.aggregate([
     {
       $match: {
         role: { $ne: 'admin' },
+        'levels.mapOne.completed': true,
       },
     },
     {
-      $match: {
-        [levels.mapOne.completed]: true,
+      $group: {
+        _id: null,
+        [`avg${metric}MapOne`]: { $avg: `$levels.mapOne.${metric}` },
+        numOfUsers: { $sum: 1 },
       },
     },
     //Eu quero que só os users que completaram o mapa possam partilhar dessa aggregation. Como farei?
   ]);
 
+  metrics.mapTwo = User.aggregate([
+    {
+      $match: {
+        role: { $ne: 'admin' },
+        'levels.mapTwo.completed': true,
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        [`avg${metric}MapTwo`]: { $avg: `$levels.mapTwo.${metric}` },
+        numOfUsers: { $sum: 1 },
+      },
+    },
+    //Eu quero que só os users que completaram o mapa possam partilhar dessa aggregation. Como farei?
+  ]);
+
+  metrics.mapThree = User.aggregate([
+    {
+      $match: {
+        role: { $ne: 'admin' },
+        'levels.mapThree.completed': true,
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        [`avg${metric}MapThree`]: { $avg: `$levels.mapThree.${metric}` },
+        numOfUsers: { $sum: 1 },
+      },
+    },
+    //Eu quero que só os users que completaram o mapa possam partilhar dessa aggregation. Como farei?
+  ]);
+
+  metrics.mapFour = User.aggregate([
+    {
+      $match: {
+        role: { $ne: 'admin' },
+        'levels.mapFour.completed': true,
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        [`avg${metric}MapFour`]: { $avg: `$levels.mapFour.${metric}` },
+        numOfUsers: { $sum: 1 },
+      },
+    },
+    //Eu quero que só os users que completaram o mapa possam partilhar dessa aggregation. Como farei?
+  ]);
+
+  metrics.mapFive = User.aggregate([
+    {
+      $match: {
+        role: { $ne: 'admin' },
+        'levels.mapFive.completed': true,
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        [`avg${metric}MapFive`]: { $avg: `$levels.mapFive.${metric}` },
+        numOfUsers: { $sum: 1 },
+      },
+    },
+    //Eu quero que só os users que completaram o mapa possam partilhar dessa aggregation. Como farei?
+  ]);
+
+  metrics.mapSix = User.aggregate([
+    {
+      $match: {
+        role: { $ne: 'admin' },
+        'levels.mapSix.completed': true,
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        [`avg${metric}MapSix`]: { $avg: `$levels.mapSix.${metric}` },
+        numOfUsers: { $sum: 1 },
+      },
+    },
+    //Eu quero que só os users que completaram o mapa possam partilhar dessa aggregation. Como farei?
+  ]);
+
+  metrics.mapSeven = User.aggregate([
+    {
+      $match: {
+        role: { $ne: 'admin' },
+        'levels.mapSeven.completed': true,
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        [`avg${metric}MapSeven`]: { $avg: `$levels.mapSeven.${metric}` },
+        numOfUsers: { $sum: 1 },
+      },
+    },
+    //Eu quero que só os users que completaram o mapa possam partilhar dessa aggregation. Como farei?
+  ]);
+
+  metrics.mapEight = User.aggregate([
+    {
+      $match: {
+        role: { $ne: 'admin' },
+        'levels.mapEight.completed': true,
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        [`avg${metric}MapEight`]: { $avg: `$levels.mapEight.${metric}` },
+        numOfUsers: { $sum: 1 },
+      },
+    },
+    //Eu quero que só os users que completaram o mapa possam partilhar dessa aggregation. Como farei?
+  ]);
+
+  let aggregatedResults = await Promise.all([
+    metrics.mapOne,
+    metrics.mapTwo,
+    metrics.mapThree,
+    metrics.mapFour,
+    metrics.mapFive,
+    metrics.mapSix,
+    metrics.mapSeven,
+    metrics.mapEight,
+  ]);
+
+  aggregatedResults = aggregatedResults.flatMap((result) => result);
+
+  metrics.mapOne =
+    aggregatedResults.find((el) => el.hasOwnProperty([`avg${metric}MapOne`])) ??
+    'Nenhum explorador completou essa fase!';
+  metrics.mapTwo =
+    aggregatedResults.find((el) => el.hasOwnProperty([`avg${metric}MapTwo`])) ??
+    'Nenhum explorador completou essa fase!';
+  metrics.mapThree =
+    aggregatedResults.find((el) =>
+      el.hasOwnProperty([`avg${metric}MapThree`])
+    ) ?? 'Nenhum explorador completou essa fase!';
+  metrics.mapFour =
+    aggregatedResults.find((el) =>
+      el.hasOwnProperty([`avg${metric}MapFour`])
+    ) ?? 'Nenhum explorador completou essa fase!';
+  metrics.mapFive =
+    aggregatedResults.find((el) =>
+      el.hasOwnProperty([`avg${metric}MapFive`])
+    ) ?? 'Nenhum explorador completou essa fase!';
+  metrics.mapSix =
+    aggregatedResults.find((el) => el.hasOwnProperty([`avg${metric}MapSix`])) ??
+    'Nenhum explorador completou essa fase!';
+  metrics.mapSeven =
+    aggregatedResults.find((el) =>
+      el.hasOwnProperty([`avg${metric}MapSeven`])
+    ) ?? 'Nenhum explorador completou essa fase!';
+  metrics.mapEight =
+    aggregatedResults.find((el) =>
+      el.hasOwnProperty([`avg${metric}MapEight`])
+    ) ?? 'Nenhum explorador completou essa fase!';
+
   res.status(200).json({
     status: 'sucess',
     data: {
       metrics,
+    },
+  });
+});
+
+exports.getAgeStatistics = catchAsync(async (req, res, next) => {
+  const [ageMin, ageMax] = req.params.age.split('-');
+  console.log(ageMin, ageMax);
+
+  if (!ageMin || !ageMax)
+    return next(new AppError('Essa faixa etária não existe!', 404));
+
+  const ages = {};
+
+  const maps = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight'];
+
+  maps.forEach((map) => {
+    ages[`map${map}`] = User.aggregate([
+      {
+        $match: {
+          role: { $ne: 'admin' },
+          age: { $gte: +ageMin, $lte: +ageMax },
+          [`levels.map${map}.completed`]: true,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          avgDurationToComplete: {
+            $avg: `$levels.map${map}.durationToComplete`,
+          },
+          avgFocusTime: { $avg: `$levels.map${map}.focusTime` },
+          avgHints: { $avg: `$levels.map${map}.hints` },
+          avgWrongMoves: { $avg: `$levels.map${map}.wrongMoves` },
+          numOfUsers: { $sum: 1 },
+        },
+      },
+    ]);
+  });
+
+  let results = await Promise.all(Object.values(ages));
+
+  results = results.flatMap((result) => result);
+
+  maps.forEach((map, ind) => {
+    ages[`map${map}`] =
+      results[ind] ||
+      'Os jogadores dessa faixa etária ainda não completaram essa fase!';
+  });
+
+  res.status(200).json({
+    status: 'sucess',
+    data: {
+      ages,
     },
   });
 });
