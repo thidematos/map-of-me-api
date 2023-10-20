@@ -66,6 +66,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
       level: req.body.level,
       description: req.body.description,
       rating: req.body.rating,
+      timeStamp: req.body.timeStamp,
     });
   } else {
     const puzzleID = req.body.puzzleID;
