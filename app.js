@@ -5,15 +5,25 @@ const AppError = require('./utils/appError');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const userRouter = require('./routes/userRoute');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+
+const limiter = rateLimit({
+  max: 200,
+  windowMs: 15 * 60 * 1000,
+  message: 'Muitas requests seguidas!',
+});
 
 const app = express();
 
-const userRouter = require('./routes/userRoute');
-
 //Global Middlewares
-app.enable('trust proxy');
+app.use('/api', limiter);
 app.use(morgan('dev'));
 app.use(express.json({ limit: '10kb' }));
+app.use(mongoSanitize());
+app.use(xss());
 
 app.use(cookieParser());
 app.use(
@@ -22,6 +32,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.options(
   '*',
   cors({
