@@ -107,7 +107,7 @@ exports.restrict = (...roles) => {
     console.log(roles, req.user.role);
     if (!roles.includes(req.user.role))
       return next(
-        new AppError('Você não está autorizado a acessar essa route', 403)
+        new AppError('Você não está autorizado a acessar essa página.', 403)
       );
     next();
   };
