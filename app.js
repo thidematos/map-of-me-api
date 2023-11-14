@@ -27,7 +27,7 @@ app.use(xss());
 
 app.enable('trust proxy');
 app.use(cookieParser());
-/*
+
 app.use(
   cors({
     origin: 'https://mapofme.cloud',
@@ -41,7 +41,6 @@ app.options(
     credentials: true,
   })
 );
-*/
 
 app.use(helmet());
 
