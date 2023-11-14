@@ -16,7 +16,8 @@ const createSignToken = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
     ),
     httpOnly: false,
-    SameSite: 'none',
+    sameSite: 'none',
+    secure: 'false',
   });
 
   res.status(statusCode).json({
