@@ -26,7 +26,19 @@ app.use(mongoSanitize());
 app.use(xss());
 
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: 'https://themapofme.onrender.com',
+    credentials: true,
+  })
+);
+app.options(
+  '*',
+  cors({
+    origin: 'https://themapofme.onrender.com',
+    credentials: true,
+  })
+);
 
 app.use(helmet());
 
