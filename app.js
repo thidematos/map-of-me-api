@@ -25,6 +25,7 @@ app.use(express.json({ limit: '10kb' }));
 app.use(mongoSanitize());
 app.use(xss());
 
+app.enable('trust proxy');
 app.use(cookieParser());
 app.use(
   cors({
