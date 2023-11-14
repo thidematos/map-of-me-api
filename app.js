@@ -26,20 +26,7 @@ app.use(mongoSanitize());
 app.use(xss());
 
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: 'http://127.0.0.1:5500',
-    credentials: true,
-  })
-);
-
-app.options(
-  '*',
-  cors({
-    origin: 'http://127.0.0.1:5500',
-    credentials: true,
-  })
-);
+app.use(cors());
 
 app.use(helmet());
 
