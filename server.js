@@ -6,6 +6,7 @@ process.on('uncaughtException', (err) => {
 });
 
 const app = require('./app');
+let server;
 
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
@@ -24,11 +25,12 @@ mongoose
     useFindAndModify: false,
     useUnifiedTopology: true,
   })
-  .then(() => console.log('Database connected 🚀🐧'));
-
-const server = app.listen(process.env.PORT, () => {
-  console.log('Server started! 🐧');
-});
+  .then(() => {
+    console.log('Database connected 🚀🐧');
+    server = app.listen(process.env.PORT, () => {
+      console.log('Server started! 🐧');
+    });
+  });
 
 process.on('unhandledRejection', (err) => {
   console.log(err.name, err.message);
