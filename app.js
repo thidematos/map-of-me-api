@@ -29,14 +29,14 @@ app.enable('trust proxy');
 app.use(cookieParser());
 app.use(
   cors({
-    origin: 'https://themapofme.onrender.com',
+    origin: 'https://mapofme.cloud',
     credentials: true,
   })
 );
 app.options(
   '*',
   cors({
-    origin: 'https://themapofme.onrender.com',
+    origin: 'https://mapofme.cloud',
     credentials: true,
   })
 );
